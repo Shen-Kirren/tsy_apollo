@@ -1,0 +1,758 @@
+syntax = "proto2";
+
+package apollo.canbus;
+
+message Mcufl_torque_feedback_10 {
+// Report Message
+  // [] [0|255]
+  optional int32 fl_errorcode = 1;
+  // [DU] [-50|205]
+  optional int32 fl_motortemp = 2;
+  // [A] [-500|500]
+  optional int32 fl_current = 3;
+  // [Nm] [-1000|1000]
+  optional double fl_torque = 4;
+  // [rpm] [-10000|10000]
+  optional double fl_speed = 5;
+  // [] [0|3]
+  optional int32 fl_shift = 6;
+}
+
+message Vcu_epsr_control_request_101 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 vcu_control_epsr_reserved_2 = 1;
+  // [N/A] [0|255]
+  optional int32 vcu_epsr_checksum = 2;
+  // [deg/s] [20|250]
+  optional int32 vcu_request_epsr_angle_speed = 3;
+  // [N/A] [0|255]
+  optional int32 vcu_request_epsr_angle_config = 4;
+  // [deg] [0|255]
+  optional int32 low_vcu_req_epsr_target_angle = 5;
+  // [deg] [0|255]
+  optional int32 high_vcu_req_epsr_target_angle = 6;
+  // [N/A] [0|255]
+  optional int32 vcu_control_epsr_reserved_1 = 7;
+  // [N/A] [0|255]
+  optional int32 vcu_request_epsr_control = 8;
+}
+
+message Remote_control_io_10a {
+// Report Message
+  // [N/A] [0|2]
+  optional int32 d_reversesteeringmode_flag = 1;
+  // [N/A] [0|2]
+  optional int32 remote_c_reserved = 2;
+  // [N/A] [0|2]
+  optional int32 remote_b_iecu_request = 3;
+  // [N/A] [0|2]
+  optional int32 remote_a_torque_request = 4;
+  // [N/A] [0|2]
+  optional int32 remote_f_epb_control = 5;
+  // [N/A] [0|2]
+  optional int32 remote_h_steeringmode = 6;
+  // [N/A] [0|2]
+  optional int32 remote_g_speedlim = 7;
+  // [N/A] [0|2]
+  optional int32 remote_e_gear = 8;
+}
+
+message Remote_control_shake_2_10b {
+// Report Message
+  // [N/A] [-450|450]
+  optional int32 remote_x1_reserved = 1;
+  // [N/A] [-450|450]
+  optional int32 remote_y1_longitudinal_control = 2;
+  // [N/A] [-450|450]
+  optional int32 remote_y2_reserved = 3;
+  // [N/A] [-450|450]
+  optional int32 remote_x2_lateral_control = 4;
+}
+
+message Epsr_status_111 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 epsr_check_sum = 1;
+  // [N/A] [0|255]
+  optional int32 epsr_reserved2 = 2;
+  // [N/A] [0|255]
+  optional int32 epsr_angle_in_middle_calib = 3;
+  // [deg] [0|255]
+  optional int32 low_epsr_angle = 4;
+  // [deg] [0|255]
+  optional int32 high_epsr_angle = 5;
+  // [N/A] [0|255]
+  optional int32 epsr_reserved1 = 6;
+  // [Nm] [-12.7|12.6]
+  optional double epsr_steering_wheel_torque_value = 7;
+  // [N/A] [0|255]
+  optional int32 epsr_work_mode_status = 8;
+}
+
+message Dbsf_status_142 {
+// Report Message
+  // [] [0|500]
+  optional int32 dbsf_reserved_2 = 1;
+  // [] [0|255]
+  optional int32 dbsf_fault_code = 2;
+  // [Mpa] [0|8]
+  optional double dbsf_hp_pressure = 3;
+  // [N/A] [0|500]
+  optional int32 dbsf_reserved_1 = 4;
+  // [N/A] [0|3]
+  optional int32 dbsf_system_status = 5;
+}
+
+message Vcu_dbsf_request_154 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 vcu_dbsf_reserved_3 = 1;
+  // [N/A] [0|100]
+  optional int32 vcu_dbsf_reserved_2 = 2;
+  // [Mpa] [0|8]
+  optional double vcu_dbsf_pressure_request = 3;
+  // [N/A] [0|1]
+  optional bool vcu_dbsf_request_flag = 4;
+  // [N/A] [0|500]
+  optional int32 vcu_dbsf_reserved_1 = 5;
+}
+
+message Vcu_mcufl_request_1_160 {
+// Report Message
+  enum Fl_vcu_motor_request_validType {
+    FL_VCU_MOTOR_REQUEST_VALID_INVALID = 0;
+    FL_VCU_MOTOR_REQUEST_VALID_VALID = 1;
+  }
+  // [] [0|255]
+  optional int32 fl_reserved_2 = 1;
+  // [1RPM] [-7000|7000]
+  optional int32 fl_speed_req = 2;
+  // [0.1Nm] [-1000|1000]
+  optional double fl_torque_req = 3;
+  // [] [0|31]
+  optional int32 fl_reserved_1 = 4;
+  // [] [0|3]
+  optional int32 fl_drivemode = 5;
+  // [] [0|1]
+  optional Fl_vcu_motor_request_validType fl_vcu_motor_request_valid = 6;
+}
+
+message Vcu_mcufr_request_1_170 {
+// Report Message
+  enum Fr_vcu_motor_request_validType {
+    FR_VCU_MOTOR_REQUEST_VALID_INVALID = 0;
+    FR_VCU_MOTOR_REQUEST_VALID_VALID = 1;
+  }
+  // [] [0|1]
+  optional Fr_vcu_motor_request_validType fr_vcu_motor_request_valid = 1;
+  // [0.1Nm] [-1000|1000]
+  optional double fr_torque_req = 2;
+  // [1RPM] [-7000|7000]
+  optional int32 fr_speed_req = 3;
+  // [] [0|255]
+  optional int32 fr_reserved_2 = 4;
+  // [] [0|31]
+  optional int32 fr_reserved_1 = 5;
+  // [] [0|3]
+  optional int32 fr_drivemode = 6;
+}
+
+message Vcu_mcurl_request_1_180 {
+// Report Message
+  enum Rl_vcu_motor_request_validType {
+    RL_VCU_MOTOR_REQUEST_VALID_INVALID = 0;
+    RL_VCU_MOTOR_REQUEST_VALID_VALID = 1;
+  }
+  // [] [0|1]
+  optional Rl_vcu_motor_request_validType rl_vcu_motor_request_valid = 1;
+  // [0.1Nm] [-1000|1000]
+  optional double rl_torque_req = 2;
+  // [1RPM] [-7000|7000]
+  optional int32 rl_speed_req = 3;
+  // [] [0|255]
+  optional int32 rl_reserved_2 = 4;
+  // [] [0|31]
+  optional int32 rl_reserved_1 = 5;
+  // [] [0|3]
+  optional int32 rl_drivemode = 6;
+}
+
+message Imu_acceleration_181 {
+// Report Message
+  // [g] [-32.768|32.767]
+  optional double imu_acc_reserved = 1;
+  // [g] [-32.768|32.767]
+  optional double imu_acc_z = 2;
+  // [g] [-32.768|32.767]
+  optional double imu_acc_y = 3;
+  // [g] [-32.768|32.767]
+  optional double imu_acc_x = 4;
+}
+
+message Vcu_mcurr_request_1_190 {
+// Report Message
+  enum Rr_vcu_motor_request_validType {
+    RR_VCU_MOTOR_REQUEST_VALID_INVALID = 0;
+    RR_VCU_MOTOR_REQUEST_VALID_VALID = 1;
+  }
+  // [] [0|1]
+  optional Rr_vcu_motor_request_validType rr_vcu_motor_request_valid = 1;
+  // [0.1Nm] [-1000|1000]
+  optional double rr_torque_req = 2;
+  // [1RPM] [-7000|7000]
+  optional int32 rr_speed_req = 3;
+  // [] [0|255]
+  optional int32 rr_reserved_2 = 4;
+  // [] [0|31]
+  optional int32 rr_reserved_1 = 5;
+  // [] [0|3]
+  optional int32 rr_drivemode = 6;
+}
+
+message Mcufr_torque_feedback_20 {
+// Report Message
+  // [Nm] [-1000|1000]
+  optional double fr_torque = 1;
+  // [rpm] [-10000|10000]
+  optional double fr_speed = 2;
+  // [] [0|3]
+  optional int32 fr_shift = 3;
+  // [DU] [-50|205]
+  optional int32 fr_motortemp = 4;
+  // [] [0|255]
+  optional int32 fr_errorcode = 5;
+  // [A] [-500|500]
+  optional int32 fr_current = 6;
+}
+
+message Imu_angular_281 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 imu_gyro_reserved = 1;
+  // [rad/s] [-32.768|32.767]
+  optional double imu_gyro_z = 2;
+  // [rad/s] [-32.768|32.767]
+  optional double imu_gyro_y = 3;
+  // [rad/s] [-32.768|32.767]
+  optional double imu_gyro_x = 4;
+}
+
+message Mcurl_torque_feedback_30 {
+// Report Message
+  // [Nm] [-1000|1000]
+  optional double rl_torque = 1;
+  // [rpm] [-10000|10000]
+  optional double rl_speed = 2;
+  // [] [0|3]
+  optional int32 rl_shift = 3;
+  // [DU] [-50|205]
+  optional int32 rl_motortemp = 4;
+  // [] [0|255]
+  optional int32 rl_errorcode = 5;
+  // [A] [-500|500]
+  optional int32 rl_current = 6;
+}
+
+message Vcu_vehicle_diagnosis_301 {
+// Report Message
+  enum Epb_stateType {
+    EPB_STATE_EPB_OK = 0;
+    EPB_STATE_EPB_FAULT = 1;
+  }
+  enum Vehicle_fault_gradeType {
+    VEHICLE_FAULT_GRADE_CAR_OK = 0;
+    VEHICLE_FAULT_GRADE_CAR_ERR1 = 1;
+    VEHICLE_FAULT_GRADE_CAR_ERR2 = 2;
+    VEHICLE_FAULT_GRADE_CAR_ERR3 = 3;
+  }
+  enum R_attach_switch_stateType {
+    R_ATTACH_SWITCH_STATE_RATCH_OK = 0;
+    R_ATTACH_SWITCH_STATE_RATCH_FAULT = 1;
+  }
+  enum F_attach_switch_stateType {
+    F_ATTACH_SWITCH_STATE_FATCH_OK = 0;
+    F_ATTACH_SWITCH_STATE_FATCH_FAULT = 1;
+  }
+  enum Bms_stateType {
+    BMS_STATE_BMS_OK = 0;
+    BMS_STATE_BMS_FAULT = 1;
+  }
+  enum Iecu_stateType {
+    IECU_STATE_IECU_OK = 0;
+    IECU_STATE_IECU_FAULT = 1;
+  }
+  enum Dbsr_stateType {
+    DBSR_STATE_DBSR_OK = 0;
+    DBSR_STATE_DBSR_FAULT = 1;
+  }
+  enum Rlmotor_stateType {
+    RLMOTOR_STATE_RL_OK = 0;
+    RLMOTOR_STATE_RL_FAULT = 1;
+  }
+  enum Rrmotor_stateType {
+    RRMOTOR_STATE_RR_OK = 0;
+    RRMOTOR_STATE_RR_FAULT = 1;
+  }
+  enum Flmotor_stateType {
+    FLMOTOR_STATE_FL_OK = 0;
+    FLMOTOR_STATE_FL_FAULT = 1;
+  }
+  enum Frmotor_stateType {
+    FRMOTOR_STATE_FR_OK = 0;
+    FRMOTOR_STATE_FR_FAULT = 1;
+  }
+  enum Rsteering_stateType {
+    RSTEERING_STATE_RSTR_OK = 0;
+    RSTEERING_STATE_RSTR_FAULT = 1;
+  }
+  enum Fsteering_stateType {
+    FSTEERING_STATE_FSTR_OK = 0;
+    FSTEERING_STATE_FSTR_FAULT = 1;
+  }
+  enum Dbsf_stateType {
+    DBSF_STATE_DBSF_OK = 0;
+    DBSF_STATE_DBSF_FAULT = 1;
+  }
+  enum Remote_stateType {
+    REMOTE_STATE_RMOT_OK = 0;
+    REMOTE_STATE_RMOT_FAULT = 1;
+  }
+  enum Emergency_button_stateType {
+    EMERGENCY_BUTTON_STATE_EMEBUT_ON = 0;
+    EMERGENCY_BUTTON_STATE_EMEBUT_OFF = 1;
+  }
+  // [] [0|255]
+  optional int32 vehicle_diagnosis_reserved_3 = 1;
+  // [] [0|0]
+  optional int32 vehicle_diagnosis_reserved_1 = 2;
+  // [] [0|255]
+  optional int32 vehicle_diagnosis_reserved_2 = 3;
+  // [] [0|1]
+  optional Epb_stateType epb_state = 4;
+  // [] [0|3]
+  optional Vehicle_fault_gradeType vehicle_fault_grade = 5;
+  // [] [0|1]
+  optional R_attach_switch_stateType r_attach_switch_state = 6;
+  // [] [0|1]
+  optional F_attach_switch_stateType f_attach_switch_state = 7;
+  // [] [0|1]
+  optional Bms_stateType bms_state = 8;
+  // [] [0|1]
+  optional Iecu_stateType iecu_state = 9;
+  // [] [0|1]
+  optional Dbsr_stateType dbsr_state = 10;
+  // [] [0|1]
+  optional Rlmotor_stateType rlmotor_state = 11;
+  // [] [0|1]
+  optional Rrmotor_stateType rrmotor_state = 12;
+  // [] [0|1]
+  optional Flmotor_stateType flmotor_state = 13;
+  // [] [0|1]
+  optional Frmotor_stateType frmotor_state = 14;
+  // [] [0|1]
+  optional Rsteering_stateType rsteering_state = 15;
+  // [] [0|1]
+  optional Fsteering_stateType fsteering_state = 16;
+  // [] [0|1]
+  optional Dbsf_stateType dbsf_state = 17;
+  // [] [0|1]
+  optional Remote_stateType remote_state = 18;
+  // [] [0|1]
+  optional Emergency_button_stateType emergency_button_state = 19;
+}
+
+message Vcu_vehicle_status_1_303 {
+// Report Message
+  enum Gear_rptType {
+    GEAR_RPT_INVALID = 0;
+    GEAR_RPT_DRIVE = 1;
+    GEAR_RPT_NEUTRAL = 2;
+    GEAR_RPT_REVERSE = 3;
+    GEAR_RPT_PARKING = 4;
+  }
+  enum Epb_rptType {
+    EPB_RPT_EPB_NONE = 0;
+    EPB_RPT_EPB_ON = 1;
+    EPB_RPT_EPB_OFF = 2;
+  }
+  // [N/A] [0|1]
+  optional int32 vehicle_status_reserved = 1;
+  // [N/A] [0|1]
+  optional int32 bms_status = 2;
+  // [N/A] [0|1]
+  optional int32 ignitionstatus = 3;
+  // [] [0|4]
+  optional Gear_rptType gear_rpt = 4;
+  // [] [0|2]
+  optional Epb_rptType epb_rpt = 5;
+  // [N/A] [0|1]
+  optional int32 vcu_ready_flag = 6;
+}
+
+message Vcu_vehicle_status_2_304 {
+// Report Message
+  // [] [0|100]
+  optional int32 throttle_rpt = 1;
+  // [deg] [-30|30]
+  optional double r_tire_angle = 2;
+  // [deg] [-30|30]
+  optional double f_tire_angle = 3;
+  // [] [0|100]
+  optional int32 vehicle_brake_pressure = 4;
+  // [km/h] [-80|80]
+  optional double vehicle_speed = 5;
+}
+
+message Vcu_vehicle_status_3_305 {
+// Report Message
+  // [rpm] [-10000|-3446.5]
+  optional double rpm_rr_rpt = 1;
+  // [rpm] [-10000|-3446.5]
+  optional double rpm_rl_rpt = 2;
+  // [rpm] [-10000|-3446.5]
+  optional double rpm_fr_rpt = 3;
+  // [rpm] [-10000|-3446.5]
+  optional double rpm_fl_rpt = 4;
+}
+
+message Vcu_epb_request_310_310 {
+// Report Message
+  enum Flagvcu_epb_requestType {
+    FLAGVCU_EPB_REQUEST_VALID = 0;
+    FLAGVCU_EPB_REQUEST_INVALID = 1;
+  }
+  enum Vcu_epb_parking_requestType {
+    VCU_EPB_PARKING_REQUEST_NOREQUEST = 0;
+    VCU_EPB_PARKING_REQUEST_RELEASEBRAKEREQUEST = 1;
+    VCU_EPB_PARKING_REQUEST_LOCKBRAKERQUEST = 2;
+    VCU_EPB_PARKING_REQUEST_RESERVED = 3;
+  }
+  // [N/A] [0|255]
+  optional int32 vcu_epb_request_reserved2 = 1;
+  // [N/A] [0|255]
+  optional int32 vcu_epb_request_reserved1 = 2;
+  // [N/A] [0|1]
+  optional Flagvcu_epb_requestType flagvcu_epb_request = 3;
+  // [N/A] [0|3]
+  optional Vcu_epb_parking_requestType vcu_epb_parking_request = 4;
+}
+
+message Epb_status_375_375 {
+// Report Message
+  enum Epb_faultType {
+    EPB_FAULT_NO_FAULT = 0;
+    EPB_FAULT_FAULT = 1;
+  }
+  enum Epb_manual_parking_keyType {
+    EPB_MANUAL_PARKING_KEY_RELEASE = 0;
+    EPB_MANUAL_PARKING_KEY_PULL_UP = 1;
+    EPB_MANUAL_PARKING_KEY_PRESS_DOWN = 2;
+    EPB_MANUAL_PARKING_KEY_ERROR = 3;
+  }
+  enum Epb_final_statesType {
+    EPB_FINAL_STATES_UNKNOW = 0;
+    EPB_FINAL_STATES_PARKED = 1;
+    EPB_FINAL_STATES_RELEASED = 2;
+    EPB_FINAL_STATES_RESERVED = 3;
+  }
+  // [] [0|255]
+  optional int32 epb_status_reserved4 = 1;
+  // [] [0|1]
+  optional bool epb_status_reserved2 = 2;
+  // [] [0|255]
+  optional int32 epb_status_reserved3 = 3;
+  // [] [0|3]
+  optional int32 epb_status_reserved1 = 4;
+  // [g] [-1.7|1.7]
+  optional double epb_imu_ax_feedback = 5;
+  // [] [0|1]
+  optional Epb_faultType epb_fault = 6;
+  // [] [0|3]
+  optional Epb_manual_parking_keyType epb_manual_parking_key = 7;
+  // [] [0|3]
+  optional Epb_final_statesType epb_final_states = 8;
+}
+
+message Imu_euler_381 {
+// Report Message
+  // [N/A] [-32768|32767]
+  optional int32 imu_euler_reserved = 1;
+  // [deg] [-186.7776|186.7719]
+  optional double imu_euler_z = 2;
+  // [deg] [-186.7776|186.7719]
+  optional double imu_euler_y = 3;
+  // [deg] [-186.7776|186.7719]
+  optional double imu_euler_x = 4;
+}
+
+message Mcurr_torque_feedback_40 {
+// Report Message
+  // [Nm] [-1000|1000]
+  optional double rr_torque = 1;
+  // [rpm] [-10000|10000]
+  optional double rr_speed = 2;
+  // [] [0|3]
+  optional int32 rr_shift = 3;
+  // [DU] [-50|205]
+  optional int32 rr_motortemp = 4;
+  // [] [0|255]
+  optional int32 rr_errorcode = 5;
+  // [A] [-500|500]
+  optional int32 rr_current = 6;
+}
+
+message Epsf_status_401 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 epsf_check_sum = 1;
+  // [N/A] [0|255]
+  optional int32 epsf_reserved2 = 2;
+  // [N/A] [0|255]
+  optional int32 epsf_angle_in_middle_calib = 3;
+  // [deg] [0|255]
+  optional int32 low_epsf_angle = 4;
+  // [deg] [0|255]
+  optional int32 high_epsf_angle = 5;
+  // [N/A] [0|255]
+  optional int32 epsf_reserved1 = 6;
+  // [Nm] [-12.7|12.6]
+  optional double epsf_steering_wheel_torque_value = 7;
+  // [N/A] [0|255]
+  optional int32 epsf_work_mode_status = 8;
+}
+
+message Vcu_epsf_control_request_469 {
+// Report Message
+  // [N/A] [0|255]
+  optional int32 vcu_control_epsf_reserved_2 = 1;
+  // [N/A] [0|255]
+  optional int32 vcu_epsf_checksum = 2;
+  // [deg/s] [20|250]
+  optional int32 vcu_request_epsf_angle_speed = 3;
+  // [N/A] [0|255]
+  optional int32 vcu_request_epsf_angle_calibrate = 4;
+  // [deg] [0|255]
+  optional int32 low_vcu_req_epsf_target_angle = 5;
+  // [deg] [0|255]
+  optional int32 high_vcu_req_epsf_target_angle = 6;
+  // [N/A] [0|255]
+  optional int32 vcu_control_epsf_reserved_1 = 7;
+  // [N/A] [0|255]
+  optional int32 vcu_request_epsf_control_mode = 8;
+}
+
+message Iecu_control_flag_501 {
+// Control Message
+  enum Iecu_control_request_flagType {
+    IECU_CONTROL_REQUEST_FLAG_IECU_DISABLE = 0;
+    IECU_CONTROL_REQUEST_FLAG_IECU_ENABLE = 1;
+  }
+  // [N/A] [0|1]
+  optional Iecu_control_request_flagType iecu_control_request_flag = 1;
+}
+
+message Iecu_control_steering_502 {
+// Control Message
+  enum Iecu_steering_validType {
+    IECU_STEERING_VALID_STR_DISABLE = 0;
+    IECU_STEERING_VALID_STR_ENABLE = 1;
+  }
+  // [deg] [-30|30]
+  optional double iecu_rtire_angle_cmd = 1;
+  // [deg] [-30|30]
+  optional double iecu_ftire_angle_cmd = 2;
+  // [deg/s] [20|250]
+  optional int32 iecu_rtire_speed_cmd = 3;
+  // [deg/s] [20|250]
+  optional int32 iecu_ftire_speed_cmd = 4;
+  // [N/A] [0|1]
+  optional Iecu_steering_validType iecu_steering_valid = 5;
+}
+
+message Iecu_control_ibc_503 {
+// Control Message
+  enum Iecu_ibc_validType {
+    IECU_IBC_VALID_BRK_DISABLE = 0;
+    IECU_IBC_VALID_BRK_ENABLE = 1;
+  }
+  // [] [0|100]
+  optional int32 iecu_brakepressure_cmd = 1;
+  // [N/A] [0|1]
+  optional Iecu_ibc_validType iecu_ibc_valid = 2;
+}
+
+message Iecu_control_power_504 {
+// Control Message
+  enum Iecu_power_gearType {
+    IECU_POWER_GEAR_PARK_CMD = 0;
+    IECU_POWER_GEAR_DRIVE_CMD = 1;
+    IECU_POWER_GEAR_NEUTRAL_CMD = 2;
+    IECU_POWER_GEAR_REVERSE_CMD = 3;
+  }
+  enum Iecu_torque_or_speed_or_accType {
+    IECU_TORQUE_OR_SPEED_OR_ACC_POW_TORQUE = 0;
+    IECU_TORQUE_OR_SPEED_OR_ACC_POW_SPEED = 1;
+    IECU_TORQUE_OR_SPEED_OR_ACC_POW_ACC = 2;
+  }
+  enum Iecu_total_or_distributeType {
+    IECU_TOTAL_OR_DISTRIBUTE_POW_TOTAL = 0;
+    IECU_TOTAL_OR_DISTRIBUTE_POW_DISTRIBUTED = 1;
+  }
+  enum Iecu_power_validType {
+    IECU_POWER_VALID_POW_DISABLE = 0;
+    IECU_POWER_VALID_POW_ENABLE = 1;
+  }
+  // [km/h] [0|80]
+  optional double iecu_power_speed = 1;
+  // [%] [0|100]
+  optional int32 iecu_power_torque = 2;
+  // [%] [-100|100]
+  optional int32 iecu_acc_de_control = 3;
+  // [N/A] [0|3]
+  optional Iecu_power_gearType iecu_power_gear = 4;
+  // [N/A] [0|2]
+  optional Iecu_torque_or_speed_or_accType iecu_torque_or_speed_or_acc = 5;
+  // [N/A] [0|1]
+  optional Iecu_total_or_distributeType iecu_total_or_distribute = 6;
+  // [N/A] [0|1]
+  optional Iecu_power_validType iecu_power_valid = 7;
+}
+
+message Iecu_control_distributed_505 {
+// Control Message
+  // [Rpm/Nm] [0|800]
+  optional int32 iecu_power_rr = 1;
+  // [Rpm/Nm] [0|800]
+  optional int32 iecu_power_rl = 2;
+  // [Rpm/Nm] [0|800]
+  optional int32 iecu_power_fr = 3;
+  // [Rpm/Nm] [0|800]
+  optional int32 iecu_power_fl = 4;
+}
+
+message Mcufl_drive_motor_feedback_msg_60 {
+// Report Message
+  enum Fl_mcu_motor_error_gradeType {
+    FL_MCU_MOTOR_ERROR_GRADE_NORMAL = 0;
+    FL_MCU_MOTOR_ERROR_GRADE_SLIGHT_FAULT = 1;
+    FL_MCU_MOTOR_ERROR_GRADE_SERIOUS_FAULT = 2;
+    FL_MCU_MOTOR_ERROR_GRADE_BREAK_DOWN = 3;
+  }
+  // [] [0|500]
+  optional int32 fl_reserved_1 = 1;
+  // [] [0|3]
+  optional Fl_mcu_motor_error_gradeType fl_mcu_motor_error_grade = 2;
+  // [] [0|1]
+  optional bool fl_energy_recovery_state = 3;
+  // [DU] [-50|205]
+  optional int32 fl_controltemp = 4;
+  // [A] [-1000|5553.5]
+  optional double fl_idc = 5;
+  // [V] [0|6553.5]
+  optional double fl_udc = 6;
+}
+
+message Mcufr_drive_motor_feedback_msg_70 {
+// Report Message
+  enum Fr_mcu_motor_error_gradeType {
+    FR_MCU_MOTOR_ERROR_GRADE_NORMAL = 0;
+    FR_MCU_MOTOR_ERROR_GRADE_SLIGHT_FAULT = 1;
+    FR_MCU_MOTOR_ERROR_GRADE_SERIOUS_FAULT = 2;
+    FR_MCU_MOTOR_ERROR_GRADE_BREAK_DOWN = 3;
+  }
+  // [] [0|500]
+  optional int32 fr_reserved_1 = 1;
+  // [] [0|3]
+  optional Fr_mcu_motor_error_gradeType fr_mcu_motor_error_grade = 2;
+  // [] [0|1]
+  optional bool fr_energy_recovery_state = 3;
+  // [DU] [-50|205]
+  optional int32 fr_controltemp = 4;
+  // [A] [-1000|5553.5]
+  optional double fr_idc = 5;
+  // [V] [0|6553.5]
+  optional double fr_udc = 6;
+}
+
+message Mcurl_drive_motor_feedback_msg_80 {
+// Report Message
+  enum Rl_mcu_motor_error_gradeType {
+    RL_MCU_MOTOR_ERROR_GRADE_NORMAL = 0;
+    RL_MCU_MOTOR_ERROR_GRADE_SLIGHT_FAULT = 1;
+    RL_MCU_MOTOR_ERROR_GRADE_SERIOUS_FAULT = 2;
+    RL_MCU_MOTOR_ERROR_GRADE_BREAK_DOWN = 3;
+  }
+  // [] [0|500]
+  optional int32 rl_reserved_1 = 1;
+  // [] [0|3]
+  optional Rl_mcu_motor_error_gradeType rl_mcu_motor_error_grade = 2;
+  // [] [0|1]
+  optional bool rl_energy_recovery_state = 3;
+  // [DU] [-50|205]
+  optional int32 rl_controltemp = 4;
+  // [A] [-1000|5553.5]
+  optional double rl_idc = 5;
+  // [V] [0|6553.5]
+  optional double rl_udc = 6;
+}
+
+message Mcurr_drive_motor_feedback_msg_90 {
+// Report Message
+  enum Rr_mcu_motor_error_gradeType {
+    RR_MCU_MOTOR_ERROR_GRADE_NORMAL = 0;
+    RR_MCU_MOTOR_ERROR_GRADE_SLIGHT_FAULT = 1;
+    RR_MCU_MOTOR_ERROR_GRADE_SERIOUS_FAULT = 2;
+    RR_MCU_MOTOR_ERROR_GRADE_BREAK_DOWN = 3;
+  }
+  // [] [0|500]
+  optional int32 rr_reserved_1 = 1;
+  // [] [0|3]
+  optional Rr_mcu_motor_error_gradeType rr_mcu_motor_error_grade = 2;
+  // [] [0|1]
+  optional bool rr_energy_recovery_state = 3;
+  // [DU] [-50|205]
+  optional int32 rr_controltemp = 4;
+  // [A] [-1000|5553.5]
+  optional double rr_idc = 5;
+  // [V] [0|6553.5]
+  optional double rr_udc = 6;
+}
+
+
+message Tsy {
+  optional Mcufl_torque_feedback_10 mcufl_torque_feedback_10 = 1; // report message
+  optional Vcu_epsr_control_request_101 vcu_epsr_control_request_101 = 2; // report message
+  optional Remote_control_io_10a remote_control_io_10a = 3; // report message
+  optional Remote_control_shake_2_10b remote_control_shake_2_10b = 4; // report message
+  optional Epsr_status_111 epsr_status_111 = 5; // report message
+  optional Dbsf_status_142 dbsf_status_142 = 6; // report message
+  optional Vcu_dbsf_request_154 vcu_dbsf_request_154 = 7; // report message
+  optional Vcu_mcufl_request_1_160 vcu_mcufl_request_1_160 = 8; // report message
+  optional Vcu_mcufr_request_1_170 vcu_mcufr_request_1_170 = 9; // report message
+  optional Vcu_mcurl_request_1_180 vcu_mcurl_request_1_180 = 10; // report message
+  optional Imu_acceleration_181 imu_acceleration_181 = 11; // report message
+  optional Vcu_mcurr_request_1_190 vcu_mcurr_request_1_190 = 12; // report message
+  optional Mcufr_torque_feedback_20 mcufr_torque_feedback_20 = 13; // report message
+  optional Imu_angular_281 imu_angular_281 = 14; // report message
+  optional Mcurl_torque_feedback_30 mcurl_torque_feedback_30 = 15; // report message
+  optional Vcu_vehicle_diagnosis_301 vcu_vehicle_diagnosis_301 = 16; // report message
+  optional Vcu_vehicle_status_1_303 vcu_vehicle_status_1_303 = 17; // report message
+  optional Vcu_vehicle_status_2_304 vcu_vehicle_status_2_304 = 18; // report message
+  optional Vcu_vehicle_status_3_305 vcu_vehicle_status_3_305 = 19; // report message
+  optional Vcu_epb_request_310_310 vcu_epb_request_310_310 = 20; // report message
+  optional Epb_status_375_375 epb_status_375_375 = 21; // report message
+  optional Imu_euler_381 imu_euler_381 = 22; // report message
+  optional Mcurr_torque_feedback_40 mcurr_torque_feedback_40 = 23; // report message
+  optional Epsf_status_401 epsf_status_401 = 24; // report message
+  optional Vcu_epsf_control_request_469 vcu_epsf_control_request_469 = 25; // report message
+  optional Iecu_control_flag_501 iecu_control_flag_501 = 26; // control message
+  optional Iecu_control_steering_502 iecu_control_steering_502 = 27; // control message
+  optional Iecu_control_ibc_503 iecu_control_ibc_503 = 28; // control message
+  optional Iecu_control_power_504 iecu_control_power_504 = 29; // control message
+  optional Iecu_control_distributed_505 iecu_control_distributed_505 = 30; // control message
+  optional Mcufl_drive_motor_feedback_msg_60 mcufl_drive_motor_feedback_msg_60 = 31; // report message
+  optional Mcufr_drive_motor_feedback_msg_70 mcufr_drive_motor_feedback_msg_70 = 32; // report message
+  optional Mcurl_drive_motor_feedback_msg_80 mcurl_drive_motor_feedback_msg_80 = 33; // report message
+  optional Mcurr_drive_motor_feedback_msg_90 mcurr_drive_motor_feedback_msg_90 = 34; // report message
+}
